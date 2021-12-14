@@ -7,7 +7,12 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.summersoft.noteapp.feature_note.domain.model.Note
 import com.summersoft.noteapp.feature_note.domain.use_case.NoteMainUseCase
+import com.summersoft.noteapp.feature_note.domain.utils.NoteOrder
+import com.summersoft.noteapp.feature_note.domain.utils.OrderType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,9 +26,21 @@ class NotesViewModel @Inject constructor(
 
     private var recentDeleteNote: Note? = null
 
+    private var getNotesJob: Job? = null
+
+    init {
+        getNotes(NoteOrder.Date(OrderType.Descending))
+    }
+
     fun onEvent(event: NoteEvent){
         when(event){
             is NoteEvent.Order -> {
+                if(state.value.noteOrder::class == event.noteOrder::class &&
+                        state.value.noteOrder.orderType == event.noteOrder.orderType){
+                    return
+                }
+
+                getNotes(event.noteOrder)
 
             }
             is NoteEvent.DeleteNote -> {
@@ -46,6 +63,17 @@ class NotesViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    fun getNotes(noteOrder: NoteOrder){
+        getNotesJob?.cancel()
+
+        getNotesJob = noteMainUseCase.getNotesUseCase(noteOrder).onEach {
+            _state.value = state.value.copy(
+                notes = it,
+                noteOrder = noteOrder
+            )
+        }.launchIn(viewModelScope)
     }
 
 }
