@@ -21,7 +21,7 @@ class AddEditNoteViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
-    private val currentNoteId: Int? = null
+    private var currentNoteId: Int? = null
 
     private val _noteTitle = mutableStateOf(NoteTextFieldState(
         hint = "Enter title..."
@@ -39,6 +39,27 @@ class AddEditNoteViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
+    init {
+        savedStateHandle.get<Int>("noteId")?.let { noteId ->
+            if(noteId != -1){
+                viewModelScope.launch {
+                    noteMainUseCase.getDetailNoteUseCase(noteId)?.also { note ->
+                        currentNoteId = note.id
+                        _noteTitle.value = noteTitle.value.copy(
+                            text = note.title,
+                            isVisibility = false
+                        )
+                        _noteContent.value = noteContent.value.copy(
+                            text = note.title,
+                            isVisibility = false
+                        )
+                        _noteColor.value = note.color
+                    }
+                }
+            }
+        }
+    }
+
 
     fun onEvent(event: AddEditNoteEvent){
         when(event){
@@ -51,6 +72,17 @@ class AddEditNoteViewModel @Inject constructor(
                 _noteTitle.value = noteTitle.value.copy(
                     isVisibility = !event.focusState.isFocused &&
                             noteTitle.value.text.isBlank()
+                )
+            }
+            is AddEditNoteEvent.EnteredContent -> {
+                _noteContent.value = noteContent.value.copy(
+                    text = event.value
+                )
+            }
+            is AddEditNoteEvent.ChangedContentFocus -> {
+                _noteContent.value = noteContent.value.copy(
+                    isVisibility = !event.focusState.isFocused &&
+                            noteContent.value.text.isBlank()
                 )
             }
             is AddEditNoteEvent.ChangedColor -> {

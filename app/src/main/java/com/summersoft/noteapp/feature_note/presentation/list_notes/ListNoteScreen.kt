@@ -1,6 +1,5 @@
-package com.summersoft.noteapp.feature_note.presentation.notes
+package com.summersoft.noteapp.feature_note.presentation.list_notes
 
-import android.widget.Space
 import androidx.compose.animation.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -17,11 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.summersoft.noteapp.feature_note.domain.utils.NoteOrder
-import com.summersoft.noteapp.feature_note.presentation.notes.components.NoteItem
-import com.summersoft.noteapp.feature_note.presentation.notes.components.OrderSection
+import com.summersoft.noteapp.feature_note.presentation.list_notes.components.NoteItem
+import com.summersoft.noteapp.feature_note.presentation.list_notes.components.OrderSection
+import com.summersoft.noteapp.feature_note.presentation.utils.Screen
 import kotlinx.coroutines.launch
-import org.intellij.lang.annotations.JdkConstants
 
 @ExperimentalAnimationApi
 @Composable
@@ -36,7 +34,9 @@ fun ListNoteScreen(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { },
+                onClick = {
+                  navController.navigate(Screen.AddEditScreen.route)
+                },
                 backgroundColor = MaterialTheme.colors.primary
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add Note")
@@ -95,7 +95,10 @@ fun ListNoteScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-
+                                navController.navigate(
+                                    Screen.AddEditScreen.route +
+                                            "?noteId={${note.id}}&noteColor={${note.color}}"
+                                )
                             },
                         onDeleteClick = {
                             viewModel.onEvent(NoteEvent.DeleteNote(note = note))

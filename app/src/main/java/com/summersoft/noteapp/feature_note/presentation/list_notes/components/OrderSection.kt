@@ -1,4 +1,4 @@
-package com.summersoft.noteapp.feature_note.presentation.notes.components
+package com.summersoft.noteapp.feature_note.presentation.list_notes.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
@@ -13,6 +13,7 @@ fun OrderSection(
     noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending),
     onOrderChange: (NoteOrder) -> Unit
 ) {
+    Spacer(modifier = Modifier.height(16.dp))
     Row(
         modifier = modifier
     ){

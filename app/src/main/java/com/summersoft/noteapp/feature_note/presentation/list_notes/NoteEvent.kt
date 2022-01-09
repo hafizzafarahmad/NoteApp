@@ -1,4 +1,4 @@
-package com.summersoft.noteapp.feature_note.presentation.notes
+package com.summersoft.noteapp.feature_note.presentation.list_notes
 
 import com.summersoft.noteapp.feature_note.domain.model.Note
 import com.summersoft.noteapp.feature_note.domain.utils.NoteOrder

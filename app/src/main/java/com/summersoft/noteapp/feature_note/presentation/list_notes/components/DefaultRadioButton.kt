@@ -1,4 +1,4 @@
-package com.summersoft.noteapp.feature_note.presentation.notes.components
+package com.summersoft.noteapp.feature_note.presentation.list_notes.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

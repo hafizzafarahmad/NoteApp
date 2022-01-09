@@ -1,10 +1,9 @@
-package com.summersoft.noteapp.feature_note.presentation.notes
+package com.summersoft.noteapp.feature_note.presentation.list_notes
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.summersoft.noteapp.feature_note.domain.model.Note
 import com.summersoft.noteapp.feature_note.domain.use_case.NoteMainUseCase
 import com.summersoft.noteapp.feature_note.domain.utils.NoteOrder

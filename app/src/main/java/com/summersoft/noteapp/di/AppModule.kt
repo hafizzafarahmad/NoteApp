@@ -5,10 +5,7 @@ import androidx.room.Room
 import com.summersoft.noteapp.feature_note.data.data_source.NoteDatabase
 import com.summersoft.noteapp.feature_note.domain.repository.NoteRepository
 import com.summersoft.noteapp.feature_note.domain.repository.NoteRepositoryImpl
-import com.summersoft.noteapp.feature_note.domain.use_case.AddNoteUseCase
-import com.summersoft.noteapp.feature_note.domain.use_case.DeleteNoteUseCase
-import com.summersoft.noteapp.feature_note.domain.use_case.GetNotesUseCase
-import com.summersoft.noteapp.feature_note.domain.use_case.NoteMainUseCase
+import com.summersoft.noteapp.feature_note.domain.use_case.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,7 +39,8 @@ object AppModule {
         return NoteMainUseCase(
             getNotesUseCase = GetNotesUseCase(repository),
             deleteNoteUseCase = DeleteNoteUseCase(repository),
-            addNoteUseCase = AddNoteUseCase(repository)
+            addNoteUseCase = AddNoteUseCase(repository),
+            getDetailNoteUseCase = GetDetailNoteUseCase(repository)
         )
     }
 }
