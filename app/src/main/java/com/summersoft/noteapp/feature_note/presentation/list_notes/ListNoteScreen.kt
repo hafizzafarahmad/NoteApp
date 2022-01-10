@@ -56,8 +56,8 @@ fun ListNoteScreen(
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Text(
-                    text = "Your Notes",
-                    style = MaterialTheme.typography.h4
+                    text = "My Notes",
+                    style = MaterialTheme.typography.h6
                 )
                 IconButton(
                     onClick = {
@@ -87,7 +87,7 @@ fun ListNoteScreen(
                )
             }
             ///LIST ITEM
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(30.dp))
             LazyColumn(modifier = Modifier.fillMaxSize()){
                 items(state.notes){ note ->
                     NoteItem(
@@ -97,7 +97,7 @@ fun ListNoteScreen(
                             .clickable {
                                 navController.navigate(
                                     Screen.AddEditScreen.route +
-                                            "?noteId={${note.id}}&noteColor={${note.color}}"
+                                            "?noteId=${note.id}&noteColor=${note.color}"
                                 )
                             },
                         onDeleteClick = {

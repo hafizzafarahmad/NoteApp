@@ -78,6 +78,7 @@ fun AddEditNoteScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .fillMaxHeight()
                 .background(noteBackgroundAnimatable.value)
                 .padding(16.dp)
         ){
